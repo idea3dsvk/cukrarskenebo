@@ -1,22 +1,43 @@
 # 📸 Návod na zmenu obrázkov produktov
 
-## 🔄 Problém: LocalStorage vs Globálne zmeny
+## ✅ OPRAVA IMPLEMENTOVANÁ!
 
-**LocalStorage** (doterajšie riešenie):
+**Dátum opravy:** 24. október 2024  
+**Commit:** d900d82
 
-- ✅ Zmeny sa prejavia okamžite
-- ❌ Len v jednom prehliadači
-- ❌ Ostatní návštevníci ich nevidia
+### Čo bolo opravené?
 
-**Nové riešenie - Export/Import:**
+1. **ProductService teraz načítava products.json pri štarte aplikácie**
+   - Predtým: Používal len hardcodované dáta v kóde
+   - Teraz: Načítava dáta z `src/data/products.json` automaticky
 
-- ✅ Zmeny sa prejavia globálne pre všetkých
-- ✅ Synchronizované cez GitHub
-- ⚠️ Vyžaduje manuálny commit (jednoduchý proces)
+2. **Pridaný HTTP Client**
+   - Angular aplikácia teraz môže robiť HTTP požiadavky
+   - Automaticky načíta products.json pri štarte
+
+3. **Assets konfigurácia**
+   - `products.json` sa automaticky kopíruje do `dist/` pri build
+   - Funguje na GitHub Pages aj lokálne
 
 ---
 
-## 🎯 Postup zmeny obrázkov (NOVÝ)
+## 🔄 Ako to teraz funguje?
+
+### Automatický proces:
+1. Pri načítaní stránky sa aplikácia pokúsi načítať `data/products.json`
+2. Ak súbor existuje a obsahuje dáta → použije ich
+3. Ak súbor neexistuje/je prázdny → použije default dáta z kódu
+4. Všetko sa uloží do LocalStorage pre rýchly prístup
+
+### Workflow zmeny obrázkov:
+
+```mermaid
+Admin Panel → Export products.json → Git Commit → GitHub Actions Build → Nové obrázky VŠADE!
+```
+
+---
+
+## 🎯 Postup zmeny obrázkov (AKTUALIZOVANÝ)
 
 ### 1️⃣ Prihláste sa do admin panelu
 
