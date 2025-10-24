@@ -72,7 +72,7 @@ Detailný návod nájdete v súbore `EMAILJS_SETUP.md`.
 ### Admin panel
 
 - **Prístup**: Kliknite na logo "Cukrárske Nebo"
-- **Heslo**: `admin123`
+- **Heslo**: `na poziadanie`
 - **Funkcie**: Úprava produktov, upload obrázkov, test emailov
 
 ## 📋 Produktové kategórie
@@ -177,7 +177,7 @@ MIT License - pozrite `LICENSE` súbor pre detaily.
 ## 📞 Kontakt
 
 Vyvinul: **PoRast**  
-Email: info@cukrarskenebo.sk  
+Email: cukrarskenebo@gmail.sk  
 Web: [Cukrárske Nebo](https://idea3dsvk.github.io/cukrarskenebo/)
 
 ---
