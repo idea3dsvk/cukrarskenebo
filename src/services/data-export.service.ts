@@ -16,7 +16,7 @@ export class DataExportService {
     
     const link = document.createElement('a');
     link.href = url;
-    link.download = `products-${new Date().getTime()}.json`;
+    link.download = 'products.json';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -34,8 +34,9 @@ NÁVOD NA NASADENIE ZMIEN PRODUKTOV
 ===================================
 
 1. NAHRAJTE SÚBOR:
-   - Stiahnutý JSON súbor (products-*.json) nahrajte do priečinka:
+   - Stiahnutý JSON súbor (products.json) nahrajte do priečinka:
      src/data/products.json
+   - DÔLEŽITÉ: Súbor musí mať presný názov "products.json"
 
 2. COMMITNITE ZMENY:
    cd /cesta/k/projektu
