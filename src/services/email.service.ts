@@ -31,6 +31,8 @@ export class EmailService {
       name: string;
       price: number;
       quantity: number;
+      color?: string;
+      size?: string;
       total: number;
     }>;
     totalAmount: number;
@@ -74,21 +76,34 @@ export class EmailService {
     }
   }
 
-  private formatItemsList(items: Array<{name: string, price: number, quantity: number, total: number}>): string {
-    return items.map(item => 
-      `${item.name} - ${item.quantity}x po ${item.price.toFixed(2)}€ = ${item.total.toFixed(2)}€`
-    ).join('\n');
+  private formatItemsList(items: Array<{name: string, price: number, quantity: number, color?: string, size?: string, total: number}>): string {
+    return items.map(item => {
+      let itemText = `${item.name}`;
+      if (item.color) itemText += ` (Farba: ${item.color})`;
+      if (item.size) itemText += ` (Veľkosť: ${item.size})`;
+      itemText += ` - ${item.quantity}x po ${item.price.toFixed(2)}€ = ${item.total.toFixed(2)}€`;
+      return itemText;
+    }).join('\n');
   }
 
-  private formatItemsHtml(items: Array<{name: string, price: number, quantity: number, total: number}>): string {
-    const rows = items.map(item => 
-      `<tr>
-        <td style="padding: 8px; border: 1px solid #ddd;">${item.name}</td>
+  private formatItemsHtml(items: Array<{name: string, price: number, quantity: number, color?: string, size?: string, total: number}>): string {
+    const rows = items.map(item => {
+      let productName = item.name;
+      const details: string[] = [];
+      if (item.color) details.push(`<strong>Farba:</strong> ${item.color}`);
+      if (item.size) details.push(`<strong>Veľkosť:</strong> ${item.size}`);
+      
+      const detailsHtml = details.length > 0 
+        ? `<br><small style="color: #666;">${details.join(' | ')}</small>` 
+        : '';
+      
+      return `<tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">${productName}${detailsHtml}</td>
         <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${item.quantity}</td>
         <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">${item.price.toFixed(2)}€</td>
         <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">${item.total.toFixed(2)}€</td>
-      </tr>`
-    ).join('');
+      </tr>`;
+    }).join('');
 
     return `
       <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
@@ -116,7 +131,7 @@ export class EmailService {
         customerPhone: '+421 123 456 789',
         customerAddress: 'Testovacia 123, Bratislava',
         items: [
-          { name: 'Test produkt', price: 5.99, quantity: 2, total: 11.98 }
+          { name: 'Test produkt', price: 5.99, quantity: 2, color: 'Ružová', size: 'Veľká', total: 11.98 }
         ],
         totalAmount: 11.98,
         orderNumber: 'TEST-001',
