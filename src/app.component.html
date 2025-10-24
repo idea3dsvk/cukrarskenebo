@@ -1,0 +1,30 @@
+<div class="flex flex-col min-h-screen">
+  <app-header></app-header>
+  <main class="flex-grow">
+    <app-product-list></app-product-list>
+  </main>
+  <app-footer></app-footer>
+
+  <!-- Cart View Component -->
+  <app-cart-view></app-cart-view>
+
+  <!-- Checkout Form Component -->
+  <app-checkout-form></app-checkout-form>
+
+  <!-- Login Modal Component -->
+  <app-login-modal></app-login-modal>
+
+  <!-- Product Edit Modal Component -->
+  <app-product-edit-modal></app-product-edit-modal>
+
+  <!-- Toast Notifications -->
+  <app-toast-notifications></app-toast-notifications>
+
+  <!-- Overlay for when any panel/modal is open -->
+  @if (isCartOpen() || isCheckoutOpen() || isLoginModalOpen() || isProductEditModalOpen()) {
+    <div 
+      (click)="closePanels()"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out">
+    </div>
+  }
+</div>

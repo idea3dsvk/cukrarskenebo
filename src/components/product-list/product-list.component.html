@@ -1,0 +1,39 @@
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 font-display">Zápichy na tortu</h1>
+    <p class="mt-4 text-lg text-gray-600">Objavte svet dekorácií, ktoré oživia každú tortu.</p>
+  </div>
+
+  <app-search 
+    [totalProducts]="products().length"
+    [resultsCount]="filteredProducts().length"
+    (searchChange)="onSearchChange($event)">
+  </app-search>
+  
+  <app-category-filter 
+    [categories]="categories()"
+    [selectedCategory]="selectedCategory()"
+    (categoryChange)="onCategorySelected($event)">
+  </app-category-filter>
+
+  @if (filteredProducts().length > 0) {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 lg:gap-8 mt-8">
+      @for (product of paginatedProducts(); track product.id) {
+        <app-product-card [product]="product" [priority]="priorityProductIds.has(product.id)"></app-product-card>
+      }
+    </div>
+    
+    @if (filteredProducts().length > itemsPerPage) {
+      <app-pagination
+        [currentPage]="currentPage()"
+        [totalItems]="filteredProducts().length"
+        [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)">
+      </app-pagination>
+    }
+  } @else {
+    <div class="text-center py-16">
+      <p class="text-gray-500 text-xl">Pre túto kategóriu sa nenašli žiadne produkty.</p>
+    </div>
+  }
+</div>
