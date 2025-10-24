@@ -19,7 +19,11 @@
             "browser": "index.tsx",
             "tsConfig": "tsconfig.json",
             "assets": [
-              "src/data/products.json"
+              {
+                "glob": "products.json",
+                "input": "src/data",
+                "output": "data"
+              }
             ]
           },
           "configurations": {
