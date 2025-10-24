@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product.model';
 import { LocalStorageService } from './local-storage.service';
 
@@ -6,6 +7,8 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root',
 })
 export class ProductService {
+  private http = inject(HttpClient);
+  
   private products: Product[] = [
     // Meno (9)
     { id: 'p1', name: 'Zlaté cukrové perličky', price: 3.49, category: 'Meno', imageUrl: 'https://picsum.photos/seed/p1/400/400' },
@@ -155,8 +158,30 @@ export class ProductService {
   isLoading = signal<boolean>(false);
 
   constructor(private localStorageService: LocalStorageService) {
-    // Load products from localStorage if available, otherwise use default products
-    this.loadFromStorage();
+    // Try to load products from JSON file first, fallback to localStorage
+    this.loadFromJsonFile();
+  }
+
+  private loadFromJsonFile(): void {
+    this.http.get<Product[]>('data/products.json').subscribe({
+      next: (productsFromJson) => {
+        console.log('Products loaded from JSON file:', productsFromJson?.length || 0);
+        
+        if (productsFromJson && productsFromJson.length > 0) {
+          // Use products from JSON file
+          this.productsSignal.set([...productsFromJson]);
+          // Also save to localStorage for offline access
+          this.saveToStorage();
+        } else {
+          console.log('Empty products.json, loading from localStorage...');
+          this.loadFromStorage();
+        }
+      },
+      error: (error) => {
+        console.warn('Could not load products.json, falling back to localStorage:', error);
+        this.loadFromStorage();
+      }
+    });
   }
 
   private loadFromStorage(): void {
