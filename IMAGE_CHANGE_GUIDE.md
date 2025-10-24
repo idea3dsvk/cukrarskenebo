@@ -8,10 +8,12 @@
 ### Čo bolo opravené?
 
 1. **ProductService teraz načítava products.json pri štarte aplikácie**
+
    - Predtým: Používal len hardcodované dáta v kóde
    - Teraz: Načítava dáta z `src/data/products.json` automaticky
 
 2. **Pridaný HTTP Client**
+
    - Angular aplikácia teraz môže robiť HTTP požiadavky
    - Automaticky načíta products.json pri štarte
 
@@ -24,6 +26,7 @@
 ## 🔄 Ako to teraz funguje?
 
 ### Automatický proces:
+
 1. Pri načítaní stránky sa aplikácia pokúsi načítať `data/products.json`
 2. Ak súbor existuje a obsahuje dáta → použije ich
 3. Ak súbor neexistuje/je prázdny → použije default dáta z kódu
