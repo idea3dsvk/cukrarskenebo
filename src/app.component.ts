@@ -9,6 +9,7 @@ import { CheckoutFormComponent } from './components/checkout-form/checkout-form.
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { ProductEditModalComponent } from './components/product-edit-modal/product-edit-modal.component';
 import { ToastNotificationsComponent } from './components/toast-notifications/toast-notifications.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { ToastNotificationsComponent } from './components/toast-notifications/to
     LoginModalComponent,
     ProductEditModalComponent,
     ToastNotificationsComponent,
+    AdminPanelComponent,
   ],
 })
 export class AppComponent {
