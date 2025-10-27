@@ -76,22 +76,24 @@ export class EmailService {
     }
   }
 
-  private formatItemsList(items: Array<{name: string, price: number, quantity: number, color?: string, size?: string, total: number}>): string {
+  private formatItemsList(items: Array<{name: string, price: number, quantity: number, color?: string, size?: string, customText?: string, total: number}>): string {
     return items.map(item => {
       let itemText = `${item.name}`;
       if (item.color) itemText += ` (Farba: ${item.color})`;
       if (item.size) itemText += ` (Veľkosť: ${item.size})`;
+      if (item.customText) itemText += ` [Text: "${item.customText}"]`;
       itemText += ` - ${item.quantity}x po ${item.price.toFixed(2)}€ = ${item.total.toFixed(2)}€`;
       return itemText;
     }).join('\n');
   }
 
-  private formatItemsHtml(items: Array<{name: string, price: number, quantity: number, color?: string, size?: string, total: number}>): string {
+  private formatItemsHtml(items: Array<{name: string, price: number, quantity: number, color?: string, size?: string, customText?: string, total: number}>): string {
     const rows = items.map(item => {
       let productName = item.name;
       const details: string[] = [];
       if (item.color) details.push(`<strong>Farba:</strong> ${item.color}`);
       if (item.size) details.push(`<strong>Veľkosť:</strong> ${item.size}`);
+      if (item.customText) details.push(`<strong>Vlastný text:</strong> <em>"${item.customText}"</em>`);
       
       const detailsHtml = details.length > 0 
         ? `<br><small style="color: #666;">${details.join(' | ')}</small>` 

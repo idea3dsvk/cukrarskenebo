@@ -16,19 +16,19 @@ export class CartService {
     return this.cartItems().reduce((total, item) => total + item.price * item.quantity, 0);
   });
 
-  addToCart(product: Product, color: string, size: string): void {
+  addToCart(product: Product, color: string, size: string, customText?: string): void {
     this.cartItems.update(items => {
-      const cartItemId = `${product.id}-${color}-${size}`;
+      const cartItemId = `${product.id}-${color}-${size}-${customText || 'notext'}`;
       const itemInCart = items.find(item => item.cartItemId === cartItemId);
 
       if (itemInCart) {
-        // Increase quantity if item with same ID, color, and size already exists
+        // Increase quantity if item with same ID, color, size, and custom text already exists
         return items.map(item =>
           item.cartItemId === cartItemId ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
         // Add new item with quantity 1
-        return [...items, { ...product, quantity: 1, color, size, cartItemId }];
+        return [...items, { ...product, quantity: 1, color, size, cartItemId, customText }];
       }
     });
   }

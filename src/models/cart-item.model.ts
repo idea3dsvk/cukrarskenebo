@@ -5,4 +5,5 @@ export interface CartItem extends Product {
   color: string;
   size: string;
   cartItemId: string;
+  customText?: string; // Vlastný text od zákazníka
 }

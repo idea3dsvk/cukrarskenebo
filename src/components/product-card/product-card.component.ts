@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, input, inject, signal } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Product } from '../../models/product.model';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
@@ -76,6 +77,21 @@ type Size = 'S' | 'M' | 'L';
             </div>
           </div>
 
+          <!-- Custom Text Input -->
+          <div class="mt-3">
+            <label for="customText-{{product()!.id}}" class="text-sm font-medium text-gray-600 mb-1 block">
+              Vlastný text (voliteľné):
+            </label>
+            <input
+              type="text"
+              id="customText-{{product()!.id}}"
+              [(ngModel)]="customTextValue"
+              placeholder="Napr. meno, venovanie..."
+              maxlength="100"
+              class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-colors">
+            <p class="text-xs text-gray-500 mt-1">Max. 100 znakov</p>
+          </div>
+
           <div class="flex justify-between items-center mt-auto pt-4">
             <span class="text-lg font-bold text-pink-500">{{ formatPrice(product()!.price) }}</span>
             <button 
@@ -94,7 +110,7 @@ type Size = 'S' | 'M' | 'L';
       </div>
     }
   `,
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule, NgOptimizedImage, FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductCardComponent {
@@ -108,6 +124,7 @@ export class ProductCardComponent {
   isAdded = signal(false);
   selectedColor = signal<ColorName>('original');
   selectedSize = signal<Size>('M');
+  customTextValue = signal<string>('');
   isAdmin = this.authService.isAdmin;
 
   readonly colors: ColorName[] = ['biela', 'čierna', 'zelená', 'modrá', 'ružová', 'červená', 'hnedá', 'žltá', 'dúhová', 'original'];
@@ -140,8 +157,14 @@ export class ProductCardComponent {
 
   addToCart(): void {
     if (this.product()) {
-      this.cartService.addToCart(this.product()!, this.selectedColor(), this.selectedSize());
+      this.cartService.addToCart(
+        this.product()!, 
+        this.selectedColor(), 
+        this.selectedSize(),
+        this.customTextValue() || undefined
+      );
       this.isAdded.set(true);
+      this.customTextValue.set(''); // Vyčistíme text po pridaní
       setTimeout(() => {
         this.isAdded.set(false);
       }, 1500);

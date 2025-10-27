@@ -153,6 +153,7 @@ export class CheckoutFormComponent {
             quantity: item.quantity,
             color: item.color,
             size: item.size,
+            customText: item.customText || '',
             total: item.price * item.quantity
           })),
           totalAmount: this.cartService.cartTotal(),

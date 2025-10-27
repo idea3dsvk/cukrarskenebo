@@ -37,6 +37,11 @@ import { CartItem } from '../../models/cart-item.model';
                       <p class="mt-1 text-sm text-gray-500 capitalize">
                         Farba: {{ item.color }} &middot; Veľkosť: {{ item.size }} &middot; {{ formatPrice(item.price) }} / ks
                       </p>
+                      @if (item.customText) {
+                        <p class="mt-1 text-sm text-pink-600 font-medium italic">
+                          📝 "{{ item.customText }}"
+                        </p>
+                      }
                     </div>
                     <div class="flex flex-1 items-end justify-between text-sm">
                       <div class="flex items-center border border-gray-300 rounded">
