@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { ProductService } from '../../services/product.service';
 import { DataExportService } from '../../services/data-export.service';
 import { EmailService } from '../../services/email.service';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -35,6 +36,24 @@ import { EmailService } from '../../services/email.service';
             </div>
 
             <div class="space-y-3">
+              <!-- Add Product Section -->
+              <div class="bg-green-50 rounded-lg p-4 border border-green-200">
+                <h4 class="font-semibold text-green-900 mb-2 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                  Pridať produkt
+                </h4>
+                <p class="text-sm text-gray-600 mb-3">
+                  Vytvoriť nový produkt v eshope.
+                </p>
+                <button 
+                  (click)="openAddProductModal()"
+                  class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                  ➕ Nový produkt
+                </button>
+              </div>
+
               <!-- Export Section -->
               <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
                 <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
@@ -129,6 +148,7 @@ export class AdminPanelComponent {
   private productService = inject(ProductService);
   private dataExportService = inject(DataExportService);
   private emailService = inject(EmailService);
+  private uiService = inject(UiService);
 
   isAdmin = this.authService.isAdmin;
   isPanelOpen = signal(false);
@@ -168,5 +188,9 @@ export class AdminPanelComponent {
       this.productService.resetProducts();
       alert('✅ Produkty boli obnovené na predvolené hodnoty.');
     }
+  }
+
+  openAddProductModal(): void {
+    this.uiService.openProductAddModal();
   }
 }

@@ -273,4 +273,31 @@ export class ProductService {
     this.productsSignal.set([...this.products]); // Reset to original products
     this.saveToStorage();
   }
+
+  // Delete product
+  deleteProduct(productId: string): void {
+    console.log('Deleting product:', productId);
+    this.productsSignal.update(products => 
+      products.filter(p => p.id !== productId)
+    );
+    this.saveToStorage();
+    // Also remove uploaded image if exists
+    this.localStorageService.removeUploadedImage(productId);
+  }
+
+  // Add new product
+  addProduct(newProduct: Omit<Product, 'id'>): void {
+    // Generate unique ID
+    const id = 'p' + Date.now();
+    const productWithId: Product = { id, ...newProduct };
+    
+    console.log('Adding new product:', productWithId);
+    this.productsSignal.update(products => [...products, productWithId]);
+    this.saveToStorage();
+    
+    // If the image is a data URL (uploaded image), save it separately
+    if (productWithId.imageUrl.startsWith('data:image/')) {
+      this.localStorageService.saveUploadedImage(productWithId.id, productWithId.imageUrl);
+    }
+  }
 }

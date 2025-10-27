@@ -67,6 +67,20 @@ export class ProductListComponent {
     return filtered.slice(startIndex, endIndex);
   });
 
+  // Responsive grid columns based on number of products in category
+  gridColumns = computed(() => {
+    const count = this.filteredProducts().length;
+    
+    // For very few products (1-3), use fewer columns
+    if (count === 1) return 'grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1';
+    if (count === 2) return 'grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2';
+    if (count === 3) return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3';
+    if (count <= 5) return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4';
+    
+    // For many products, use full 5-column layout
+    return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
+  });
+
   onCategorySelected(category: string): void {
     this.selectedCategory.set(category);
   }

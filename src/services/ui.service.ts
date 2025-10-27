@@ -9,6 +9,7 @@ export class UiService {
   isCheckoutOpen = signal(false);
   isLoginModalOpen = signal(false);
   isProductEditModalOpen = signal(false);
+  isProductAddModalOpen = signal(false);
   
   editingProduct = signal<Product | null>(null);
 
@@ -53,10 +54,19 @@ export class UiService {
     this.editingProduct.set(null);
   }
 
+  openProductAddModal(): void {
+    this.isProductAddModalOpen.set(true);
+  }
+
+  closeProductAddModal(): void {
+    this.isProductAddModalOpen.set(false);
+  }
+
   closeAllPanels(): void {
     this.isCartOpen.set(false);
     this.isCheckoutOpen.set(false);
     this.isLoginModalOpen.set(false);
     this.isProductEditModalOpen.set(false);
+    this.isProductAddModalOpen.set(false);
   }
 }

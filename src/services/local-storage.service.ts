@@ -65,6 +65,19 @@ export class LocalStorageService {
     }
   }
 
+  // Remove uploaded image
+  removeUploadedImage(productId: string): void {
+    try {
+      console.log('Removing uploaded image for product:', productId);
+      const images = this.getUploadedImages();
+      delete images[productId];
+      localStorage.setItem(this.UPLOADED_IMAGES_KEY, JSON.stringify(images));
+      console.log('Uploaded image removed successfully');
+    } catch (error) {
+      console.error('Error removing uploaded image:', error);
+    }
+  }
+
   // Clear all data
   clearAll(): void {
     try {
