@@ -29,7 +29,7 @@ import { EmailService } from '../../services/email.service';
 
           <div class="flex justify-center mt-6">
             <a href="https://idea3dsvk.github.io/idea3d/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-pink-500 transition-colors text-sm underline">
-              Navštívte náš web
+              3D modelovanie: výrobky na mieru...
             </a>
           </div>
            @if(!isAdmin()) {
