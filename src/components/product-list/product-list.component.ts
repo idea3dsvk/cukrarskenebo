@@ -83,6 +83,7 @@ export class ProductListComponent {
 
   onCategorySelected(category: string): void {
     this.selectedCategory.set(category);
+    this.currentPage.set(1); // Reset to first page when category changes
   }
 
   onSearchChange(query: string): void {
