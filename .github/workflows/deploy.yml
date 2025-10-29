@@ -36,13 +36,18 @@ jobs:
       - name: Build Angular app
         run: npm run build -- --base-href=/cukrarskenebo/
       
+      - name: List dist directory
+        run: |
+          echo "Contents of dist directory:"
+          ls -R dist || echo "dist directory not found"
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/cukrarske-nebo/browser
+          path: ./dist
       
       - name: Deploy to GitHub Pages
         id: deployment
