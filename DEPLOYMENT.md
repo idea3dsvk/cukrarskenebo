@@ -136,7 +136,7 @@ https://[USERNAME].github.io/cukrarske-nebo/
 
 ### 2. Admin panel
 
-- ✅ Prihlásenie (heslo: admin123)
+- ✅ Prihlásenie
 - ✅ Úprava produktov
 - ✅ Upload obrázkov
 - ✅ Test emailu
